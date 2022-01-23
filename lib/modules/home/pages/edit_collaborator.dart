@@ -5,14 +5,17 @@ import 'package:crud_getx/theme/app_dimension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SaveCollaborator extends GetView<HomeController> {
-  const SaveCollaborator({Key? key}) : super(key: key);
+class EditCollaborator extends GetView<HomeController> {
+  EditCollaborator({Key? key}) : super(key: key);
+
+  final CollaboratorModel collaborator = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Salvar'),
+        title: Text(collaborator.name),
+        centerTitle: true,
       ),
       body: Center(
         child: Padding(
@@ -25,13 +28,23 @@ class SaveCollaborator extends GetView<HomeController> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                TextFieldComponent(label: 'Nome', controller: controller.nameEC),
+                TextFieldComponent(
+                  label: 'Nome',
+                  controller: controller.nameEC = TextEditingController(
+                    text: collaborator.name,
+                  ),
+                ),
                 const SizedBox(height: AppDimension.dm_16),
-                TextFieldComponent(label: 'Cargo', controller: controller.jobEC),
+                TextFieldComponent(
+                  label: 'Cargo',
+                  controller: controller.jobEC = TextEditingController(
+                    text: collaborator.job,
+                  ),
+                ),
                 const SizedBox(height: AppDimension.dm_24),
                 ElevatedButton(
-                  child: const Text('Cadastrar'),
-                  onPressed: () => controller.saveCollaborator(),
+                  child: const Text('Editar'),
+                  onPressed: () => controller.updateCollaborator(collaborator),
                 ),
               ],
             ),

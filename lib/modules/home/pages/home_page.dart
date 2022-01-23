@@ -4,7 +4,6 @@ import 'package:crud_getx/theme/app_dimension.dart';
 import 'package:crud_getx/theme/app_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get/route_manager.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({Key? key}) : super(key: key);
@@ -37,10 +36,19 @@ class HomePage extends GetView<HomeController> {
 
                       return ListTile(
                         title: Text(collaborator.name),
-                        subtitle: Text(collaborator.job),
-                        trailing: IconButton(
-                          onPressed: () => controller.deleteCollaborator(collaborator),
-                          icon: const Icon(Icons.delete),
+                        subtitle: Text(collaborator.timestamp.toString()),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              onPressed: () => controller.goToEditPage(collaborator),
+                              icon: const Icon(Icons.edit),
+                            ),
+                            IconButton(
+                              onPressed: () => controller.deleteCollaborator(collaborator),
+                              icon: const Icon(Icons.delete),
+                            ),
+                          ],
                         ),
                       );
                     },
@@ -54,7 +62,7 @@ class HomePage extends GetView<HomeController> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.toNamed('/save'),
+        onPressed: () => controller.goToSavePage(),
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
